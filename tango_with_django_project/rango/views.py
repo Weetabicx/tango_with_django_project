@@ -93,7 +93,7 @@ def add_page(request, category_name_slug):
         if form.is_valid():
             if category:
                 print(category)
-                page = form.save(commit=True)
+                page = form.save(commit=False) # Changing this to true will fail the test
                 page.category = category
                 page.views = 0
                 page.save()
