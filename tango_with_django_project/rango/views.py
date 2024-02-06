@@ -6,6 +6,7 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -132,7 +133,7 @@ def register(request):
             registered = True
         else:
             print(user_form.errors, profile_form.errors)
-            
+
     return render(request, 'rango/register.html', 
                   context= {
                       'user_form': user_form,
@@ -178,3 +179,8 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'rango/login.html')
+    
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
